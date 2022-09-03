@@ -26,6 +26,10 @@
 
 body {
   background-image: url(https://s24990.pcdn.co/wp-content/uploads/2016/02/ALDI_Store_Exterior_Image-400x267.jpg);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+  background-size: cover;
 }
 
 .App-link {
