@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
-const UserModel = require('./models/Users');
+const ItemModel = require('./models/Ingredients');
 
 const cors = require("cors");
 
@@ -11,8 +11,8 @@ app.use(cors());
 mongoose.connect("mongodb+srv://phostings:parasite1@cluster0.7uvug1v.mongodb.net/newdatabase?retryWrites=true&w=majority"
 );
 
-app.get("/getUsers", (req, res) => {
-    UserModel.find({}, (err, result) => {
+app.get("/getItem", (req, res) => {
+    ItemModel.find({}, (err, result) => {
         if (err) {
             res.json(err);
         } else {
@@ -21,13 +21,17 @@ app.get("/getUsers", (req, res) => {
     });
 });
 
-app.post("/createUser", async (req, res) => {
-    const user = req.body;
-    const newUser = new UserModel(user);
-    await newUser.save();
 
-    res.json(user);
+
+app.post("/createItem", async (req, res) => {
+    const item = req.body;
+    const newItem = new ItemModel(item);
+    await newItem.save();
+
+    res.json(item);
 });
+
+app.put("/")
 
 app.listen(3001, () => {
     console.log("server is running");

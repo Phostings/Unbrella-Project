@@ -3,28 +3,28 @@ import { useState, useEffect } from "react";
 import Axios from "axios";
 
 function App() {
-  const [listOfUsers, setListOfUsers] = useState([]);
+  const [listOfItems, setListOfItems] = useState([]);
   const [name, setName] = useState("")
-  const [age, setAge] = useState(0)
-  const [username, setUsername] = useState("")
+  const [group, setGroup] = useState("")
+  const [nutrients, setNutrients] = useState("")
 
   useEffect(() => {
-    Axios.get("http://localhost:3001/getUsers").then((response) => {
-      setListOfUsers(response.data);
+    Axios.get("http://localhost:3001/getItem").then((response) => {
+      setListOfItems(response.data);
     })
   }, []);
 
-  const createUser = () => {
-    Axios.post("http://localhost:3001/createUser", {
+  const createItem = () => {
+    Axios.post("http://localhost:3001/createItem", {
       name, 
-      age, 
-      username,
+      group, 
+      nutrients,
     }).then((response) => {
-      setListOfUsers([
-        ...listOfUsers, {
+      setListOfItems([
+        ...listOfItems, {
           name,
-          age,
-          username,
+          group,
+          nutrients,
         }
       ]);
     });
@@ -32,13 +32,13 @@ function App() {
 
   return (
     <div className="App">
-      <div className="usersDisplay">
-        {listOfUsers.map((user) => {
+      <div className="itemDisplay">
+        {listOfItems.map((item) => {
           return (
             <div>
-              <h1>Name: {user.name}</h1>
-              <h1>Age: {user.age}</h1>
-              <h1>Username: {user.username}</h1>
+              <h1>Name: {item.name}</h1>
+              <h1>group: {item.group}</h1>
+              <h1>nutrients: {item.nutrients}</h1>
             </div>
           );  
         })}
@@ -50,17 +50,17 @@ function App() {
           setName(event.target.value);
           }}
         />
-        <input type="number" placeholder="Age..." 
+        <input type="text" placeholder="group..." 
         onChange={(event) => {
-          setAge(event.target.value);
+          setGroup(event.target.value);
         }}
         />
-        <input type="text" placeholder="username..."
+        <input type="text" placeholder="nutrients..."
         onChange={(event) => {
-          setUsername(event.target.value);
+          setNutrients(event.target.value);
         }}
         />
-        <button onClick={createUser}> Create User</button>
+        <button onClick={createItem}> Create Item</button>
       </div>
     </div>
   );
