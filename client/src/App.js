@@ -3,14 +3,22 @@ import { useState, useEffect } from "react";
 import Axios from "axios";
 
 function App() {
-  const [listOfItems, setListOfItems] = useState([]);
+  const [listOfItems, setListOfItems] = useState([])
+  const [listOfUsers, setListOfUsers] = useState([])
   const [name, setName] = useState("")
+  const [age, setAge] = useState("")
+  const [username, setUsername] = useState("")
   const [group, setGroup] = useState("")
   const [nutrients, setNutrients] = useState("")
+
+  
 
   useEffect(() => {
     Axios.get("http://localhost:3001/getItem").then((response) => {
       setListOfItems(response.data);
+    })
+    Axios.get('http://localhost:3001/getUser').then((response) => {
+      setListOfUsers(response.data);
     })
   }, []);
 
@@ -29,6 +37,22 @@ function App() {
       ]);
     });
   };
+
+  const createUser = () =>{
+    Axios.post("http://localhost:3001/createUser", {
+      name,
+      age,
+      username,
+    }).then((response) => {
+      setListOfUsers([
+        ...listOfUsers, {
+          name,
+          age,
+          username,
+        }
+      ])
+    })
+  }
 
   return (
     <div className="App">

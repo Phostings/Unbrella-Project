@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const ItemModel = require('./models/Ingredients');
 
 const cors = require("cors");
+const UserModel = require('./models/Users');
 
 app.use(express.json());
 app.use(cors());
@@ -21,6 +22,17 @@ app.get("/getItem", (req, res) => {
     });
 });
 
+app.get("/getUser", (req, res) => {
+    UserModel.find({}, (err, result) => {
+        if (err) {
+            res.json(err);
+        
+        }else {
+            res.json(result);
+        }
+    });
+});
+
 
 
 app.post("/createItem", async (req, res) => {
@@ -30,6 +42,14 @@ app.post("/createItem", async (req, res) => {
 
     res.json(item);
 });
+
+app.post("/createUser", async (req, res) => {
+    const user = req.body;
+    const newUser = new UserModel(user)
+    await newUser.save();
+
+    res.json(user)
+})
 
 app.put("/")
 
