@@ -2,90 +2,65 @@ import './App.css';
 import { useState, useEffect } from "react";
 import Axios from "axios";
 
-
 function App() {
-  const [listOfItems, setListOfItems] = useState([])
-  const [listOfUsers, setListOfUsers] = useState([])
-  const [name, setName] = useState("")
-  const [age, setAge] = useState("")
-  const [username, setUsername] = useState("")
-  const [group, setGroup] = useState("")
-  const [nutrients, setNutrients] = useState("")
-
-  
+  const [listOfUsers, setListOfUsers] = useState([]);
+  const [first, setFirst] = useState("")
+  const [last, setLast] = useState("")
+  const [email, setEmail] = useState("")
 
   useEffect(() => {
-    Axios.get("http://localhost:3001/getItem").then((response) => {
-      setListOfItems(response.data);
-    })
-    Axios.get('http://localhost:3001/getUser').then((response) => {
+    Axios.get("http://localhost:3001/getUser").then((response) => {
       setListOfUsers(response.data);
     })
   }, []);
 
-  const createItem = () => {
-    Axios.post("http://localhost:3001/createItem", {
-      name, 
-      group, 
-      nutrients,
+  const createUser = () => {
+    Axios.post("http://localhost:3001/createUser", {
+      first, 
+      last, 
+      email,
     }).then((response) => {
-      setListOfItems([
-        ...listOfItems, {
-          name,
-          group,
-          nutrients,
+      setListOfUsers([
+        ...listOfUsers, {
+          first,
+          last,
+          email,
         }
       ]);
     });
   };
 
-  const createUser = () =>{
-    Axios.post("http://localhost:3001/createUser", {
-      name,
-      age,
-      username,
-    }).then((response) => {
-      setListOfUsers([
-        ...listOfUsers, {
-          name,
-          age,
-          username,
-        }
-      ])
-    })
-  }
-
   return (
     <div className="App">
-      <div className="itemDisplay">
-        {listOfItems.map((item) => {
+      <div className="userDisplay">
+        {listOfUsers.map((user) => {
           return (
             <div>
-              <h1>Name: {item.name}</h1>
-              <h1>group: {item.group}</h1>
-              <h1>nutrients: {item.nutrients}</h1>
+              <h1>first: {user.first}</h1>
+              <h1>last: {user.last}</h1>
+              <h1>email: {user.email}</h1>
             </div>
           );  
         })}
       </div>
 
       <div>
-        <input type="text" placeholder="Name..." 
+        <input type="text" placeholder="First..." 
         onChange={(event) => {
-          setName(event.target.value);
+          setFirst(event.target.value);
           }}
         />
-        <input type="text" placeholder="group..." 
+        <input type="text" placeholder="User..." 
         onChange={(event) => {
-          setGroup(event.target.value);
+          setLast(event.target.value);
         }}
         />
-        <input type="text" placeholder="nutrients..."
+        <input type="text" placeholder="Email..."
         onChange={(event) => {
-          setNutrients(event.target.value);
+          setEmail(event.target.value);
         }}
         />
-        <button onClick={createItem}> Create Item</button>
+        <button onClick={createUser}> Create User</button>
       </div>
     </div>
   );
