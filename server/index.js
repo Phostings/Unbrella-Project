@@ -3,10 +3,14 @@ const app = express();
 const mongoose = require('mongoose');
 const UserModel = require('./models/Users');
 
+
+
 const cors = require("cors");
 
 app.use(express.json());
 app.use(cors());
+
+
 
 mongoose.connect("mongodb+srv://phostings:parasite1@cluster0.7uvug1v.mongodb.net/newdatabase?retryWrites=true&w=majority"
 );
